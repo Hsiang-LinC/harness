@@ -2,7 +2,7 @@
 
 Engineering methods with tracked work in Linear and delivery in GitHub.
 The public marketplace is [Hsiang-LinC/harness](https://github.com/Hsiang-LinC/harness).
-This is a prerelease snapshot, not the stable 1.0 release. In Codex:
+Harness 1.0.0 is the stable Interactive release. In Codex:
 
 ```sh
 codex plugin marketplace add Hsiang-LinC/harness
