@@ -10,7 +10,7 @@
     {
       "name": "harness",
       "description": "Matt Pocock's engineering methods with code-enforced seams: grill, Spec, tickets, TDD and independent review, with progress in Linear and GitHub.",
-      "source": "./plugin",
+      "source": "./",
       "category": "developer-tools"
     }
   ]

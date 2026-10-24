@@ -1,11 +1,43 @@
 # Harness
 
-Curated engineering methods with code-enforced seams for Claude Code and Codex.
+Requires Node.js 22.12+, Git, GitHub CLI (`gh`), and a Linear account.
 
-Install the harness plugin from the Hsiang-LinC/harness marketplace.
-See [installation and usage](plugin/README.md) and the [MIT license](LICENSE).
-Report bugs and requests in [GitHub Issues](https://github.com/Hsiang-LinC/harness/issues).
-Maintainers triage actionable work into Linear.
+## 1. Install
 
-This repository contains product snapshots, without development history. Versions containing a prerelease suffix are candidates, not stable 1.0 releases.
-Release provenance is in [.harness-release.json](.harness-release.json).
+### Codex
+
+```sh
+codex plugin marketplace add Hsiang-LinC/harness
+codex plugin add harness@harness
+```
+
+### Claude Code
+
+```text
+/plugin marketplace add Hsiang-LinC/harness
+/plugin install harness@harness
+```
+
+## 2. Run setup
+
+Open your project and run:
+
+- **Codex:** `$setup`
+- **Claude Code:** `/harness:setup`
+
+Setup configures your Linear project and repository workflow. Connect the
+Linear integration in your agent and provide the team and project to use.
+
+## 3. Connect Linear and GitHub
+
+Ask your agent to connect the Harness CLI to Linear using your Linear API
+key. Enter the key locally; do not paste it into chat or commit it.
+
+Sign in to GitHub:
+
+```sh
+gh auth login
+```
+
+Once configured, start work with `$guide <goal>` in Codex or
+`/harness:guide <goal>` in Claude Code.
