@@ -1,0 +1,3 @@
+interface:
+  display_name: "Acceptance"
+  short_description: "Check an installed candidate against written journeys"

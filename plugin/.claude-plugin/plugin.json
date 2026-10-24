@@ -1,0 +1,47 @@
+{
+  "name": "harness",
+  "version": "0.3.0-dev.snapshot.1",
+  "description": "Matt Pocock's engineering methods with code-enforced seams: grill, Spec, tickets, TDD and independent review, with progress in Linear and GitHub.",
+  "author": {
+    "name": "Danny"
+  },
+  "repository": "https://github.com/Hsiang-LinC/harness",
+  "keywords": [
+    "engineering",
+    "tdd",
+    "code-review",
+    "linear",
+    "workflow"
+  ],
+  "skills": [
+    "./.agents/skills/acceptance",
+    "./.agents/skills/code-review",
+    "./.agents/skills/codebase-design",
+    "./.agents/skills/diagnosing-bugs",
+    "./.agents/skills/domain-modeling",
+    "./.agents/skills/grill-me",
+    "./.agents/skills/grill-with-docs",
+    "./.agents/skills/grilling",
+    "./.agents/skills/guide",
+    "./.agents/skills/handoff",
+    "./.agents/skills/implement",
+    "./.agents/skills/implement-spec",
+    "./.agents/skills/improve-codebase-architecture",
+    "./.agents/skills/interrogate",
+    "./.agents/skills/pr",
+    "./.agents/skills/prototype",
+    "./.agents/skills/research",
+    "./.agents/skills/retro",
+    "./.agents/skills/setup",
+    "./.agents/skills/tdd",
+    "./.agents/skills/teach",
+    "./.agents/skills/to-questionnaire",
+    "./.agents/skills/to-spec",
+    "./.agents/skills/to-tickets",
+    "./.agents/skills/triage",
+    "./.agents/skills/wait-what",
+    "./.agents/skills/wayfinder",
+    "./.agents/skills/wizard",
+    "./.agents/skills/writing-for-agents"
+  ]
+}

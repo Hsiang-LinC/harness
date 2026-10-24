@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "packages": [
+    {
+      "name": "bare-addon-resolve",
+      "version": "1.11.0",
+      "integrity": "sha512-bTUBSqBjzQQzo2/iIk6KxAClZfahy38EPsJV2bPJ+p2+kS8h+hT5TE5QggpkFUrCnLL4HDTA4DDM+YiNdyol0w==",
+      "url": "https://registry.npmjs.org/bare-addon-resolve/-/bare-addon-resolve-1.11.0.tgz"
+    },
+    {
+      "name": "bare-module-resolve",
+      "version": "1.12.6",
+      "integrity": "sha512-tsoOqHmtF6VmNX4LYDBZwvQVkSmEagnbykNjK31LMxz/amyKfjCs4K976n7uJd1bvWfxbpLQ3Fy7qq8an6jR6Q==",
+      "url": "https://registry.npmjs.org/bare-module-resolve/-/bare-module-resolve-1.12.6.tgz"
+    },
+    {
+      "name": "bare-semver",
+      "version": "1.1.0",
+      "integrity": "sha512-1Hw5qJ7hXdVt3uPUqjeFTuxyvBUJauvz5A1I2jk8gzjZMHp04n//6nV9MDbG9CMw78JHY2lGV0w6s//LrASm2w==",
+      "url": "https://registry.npmjs.org/bare-semver/-/bare-semver-1.1.0.tgz"
+    },
+    {
+      "name": "fs-native-extensions",
+      "version": "1.5.1",
+      "integrity": "sha512-abjiHKkYdcH5M9ikBEJb0MKb/fEpPtZx/yfLHzTptvUAoiFayX0tIe0BTLBU4SAoRyjZLzA0dP1Rn2p0+QRyVg==",
+      "url": "https://registry.npmjs.org/fs-native-extensions/-/fs-native-extensions-1.5.1.tgz"
+    },
+    {
+      "name": "require-addon",
+      "version": "1.3.0",
+      "integrity": "sha512-j8pifaPNZI7ShKY3ihXZwF0qaEjua8zmlqPvDil0a8SBnyRvjCbAiEQuzO0UcoXH1sqU5U/ilXSjYd1W5NYwAA==",
+      "url": "https://registry.npmjs.org/require-addon/-/require-addon-1.3.0.tgz"
+    },
+    {
+      "name": "which-runtime",
+      "version": "1.4.0",
+      "integrity": "sha512-0ugbP4CJW4e2D20jvEcC4973dCgIaHI4Rw1PT+26U9zEve7FyYdWAIwUnoeOYvoCfn+wXHoHTKb1KhkYlb60Pw==",
+      "url": "https://registry.npmjs.org/which-runtime/-/which-runtime-1.4.0.tgz"
+    }
+  ],
+  "files": {
+    "node_modules/bare-addon-resolve/LICENSE": {
+      "package": "bare-addon-resolve",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/bare-addon-resolve/lib/errors.js": {
+      "package": "bare-addon-resolve",
+      "bytes": 540,
+      "sha256": "843a49cd9db0949dd7deb7f5f9f1664496890a01ad55b80cf0c2e48a0ec4dc01"
+    },
+    "node_modules/bare-addon-resolve/index.js": {
+      "package": "bare-addon-resolve",
+      "bytes": 12288,
+      "sha256": "8accdae73424fa4751de917f333fc4bb0ed382c65a0590ca95dbe9cfb121f1eb"
+    },
+    "node_modules/bare-addon-resolve/package.json": {
+      "package": "bare-addon-resolve",
+      "bytes": 1402,
+      "sha256": "53443ee29150e35fecf5fb6dbe58755c35142b0ba884e219e872fb95c36af8b7"
+    },
+    "node_modules/bare-module-resolve/LICENSE": {
+      "package": "bare-module-resolve",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/bare-module-resolve/lib/errors.js": {
+      "package": "bare-module-resolve",
+      "bytes": 1077,
+      "sha256": "b9283888f7bcb6f59338e0f8aefb28f05d5e8456ae18bcccfdbd2400d0bd0d7d"
+    },
+    "node_modules/bare-module-resolve/index.js": {
+      "package": "bare-module-resolve",
+      "bytes": 22804,
+      "sha256": "57ec0e12cdcb4dcbfc70e7f2b64f3be8c470cd29ba5097a91d4378468a903661"
+    },
+    "node_modules/bare-module-resolve/package.json": {
+      "package": "bare-module-resolve",
+      "bytes": 1369,
+      "sha256": "3efba0290e10d08356f76e9dd0e2668c30d05be6b01c3855530f9801824f57d5"
+    },
+    "node_modules/bare-semver/LICENSE": {
+      "package": "bare-semver",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/bare-semver/lib/comparator.js": {
+      "package": "bare-semver",
+      "bytes": 742,
+      "sha256": "752ed279262e488b2ef5dcffe5b516e91feb36eea8b941947e72832deab2e754"
+    },
+    "node_modules/bare-semver/lib/constants.js": {
+      "package": "bare-semver",
+      "bytes": 67,
+      "sha256": "1cde6ca703fe8182791de80123ca90e2dba6fb8f19049672de9fe5504a6ebeb4"
+    },
+    "node_modules/bare-semver/lib/errors.js": {
+      "package": "bare-semver",
+      "bytes": 525,
+      "sha256": "fdd5409b07d923eaaae948397828aca804243ddac6b4040e2e0df2acae631ea2"
+    },
+    "node_modules/bare-semver/index.js": {
+      "package": "bare-semver",
+      "bytes": 472,
+      "sha256": "73ebe914ad93e9757ed82e85eeae233c6b4f3fbe2f785eeb988f4d7c2c8b7d68"
+    },
+    "node_modules/bare-semver/lib/range.js": {
+      "package": "bare-semver",
+      "bytes": 7181,
+      "sha256": "637cfa8a30e2806a8a2b615ba7ce104817b3ca087576ec4afcedd1e069fca887"
+    },
+    "node_modules/bare-semver/lib/version.js": {
+      "package": "bare-semver",
+      "bytes": 4764,
+      "sha256": "65fe4455585dcccdd76f55c3456985ee2cbe87296f6b95dbcf8942a654cb2fe3"
+    },
+    "node_modules/bare-semver/package.json": {
+      "package": "bare-semver",
+      "bytes": 1108,
+      "sha256": "bf5bc14deaa6aeff17ffc9295a3590af77fb6c1342226e42f36a0046074d872f"
+    },
+    "node_modules/fs-native-extensions/LICENSE": {
+      "package": "fs-native-extensions",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/fs-native-extensions/binding.js": {
+      "package": "fs-native-extensions",
+      "bytes": 90,
+      "sha256": "f6610bfca5b4420ec3d8d061fb0a7b8093fb65daaa7c3b055ed49faa6152658b"
+    },
+    "node_modules/fs-native-extensions/index.js": {
+      "package": "fs-native-extensions",
+      "bytes": 7239,
+      "sha256": "607e535d8f99cd601b172cdb4844519468e61a6101e36910bff959adcd7f663d"
+    },
+    "node_modules/fs-native-extensions/package.json": {
+      "package": "fs-native-extensions",
+      "bytes": 1790,
+      "sha256": "d23dd712121d3d2faaf54b81c4e45c18d7cc273463d56dea521af4568b8e4c00"
+    },
+    "node_modules/fs-native-extensions/prebuilds/android-arm/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 33088,
+      "sha256": "5bc621f1528afebad0502b0ad911cebbe853f00e12dcfd360ba74b3fc0f30f59"
+    },
+    "node_modules/fs-native-extensions/prebuilds/android-arm64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 41024,
+      "sha256": "502cbbf6fdc6dcd23f08e5d41f3c9eec5aab2d4320f6718df569bf4d8672d727"
+    },
+    "node_modules/fs-native-extensions/prebuilds/android-ia32/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 33964,
+      "sha256": "6823b0a8fa81d6a7115fc694ef948a18b4aef832587a83d67cc3a365df3193e6"
+    },
+    "node_modules/fs-native-extensions/prebuilds/android-x64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 37800,
+      "sha256": "9e59e652f7a52e6b0a49cf578ab18b3be646983987bb4e7d91e22965760c3d9a"
+    },
+    "node_modules/fs-native-extensions/prebuilds/darwin-arm64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 74072,
+      "sha256": "1e93b74e556b7d1767d57fabb197d9d1df5641453967170537278f72ed46f018"
+    },
+    "node_modules/fs-native-extensions/prebuilds/darwin-x64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 36504,
+      "sha256": "973e4b2addf30901b955c75626ac153d3a37cebcfa621375bcd490f199884c8e"
+    },
+    "node_modules/fs-native-extensions/prebuilds/linux-arm64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 37312,
+      "sha256": "895dd0dca09438454f28bba250bcafa3e69c937fe97ea46b1b6212dc3a81315c"
+    },
+    "node_modules/fs-native-extensions/prebuilds/linux-x64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 37096,
+      "sha256": "13657db7ce92f823ee8066cc7244f3a475340707fc065fd4f5aceeebbfa898c3"
+    },
+    "node_modules/fs-native-extensions/prebuilds/win32-arm64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 127488,
+      "sha256": "b39cecb92c210708b6f0848de9a054bf08d4dc35994db12aedca8bad91a96302"
+    },
+    "node_modules/fs-native-extensions/prebuilds/win32-x64/fs-native-extensions.node": {
+      "package": "fs-native-extensions",
+      "bytes": 135680,
+      "sha256": "dd3f8eb1d53441f151551c84a1211c79524b1eab74ff83ab93e68037f3997ba4"
+    },
+    "node_modules/require-addon/LICENSE": {
+      "package": "require-addon",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/require-addon/lib/bare.js": {
+      "package": "require-addon",
+      "bytes": 45,
+      "sha256": "5d16cff57836196016650252bb3ca38230a07fb04d48cf1a32b6b2254e109701"
+    },
+    "node_modules/require-addon/lib/default.js": {
+      "package": "require-addon",
+      "bytes": 248,
+      "sha256": "74a617d99964b2523fa6dd1a0114c758c0e426ea464d39d69db877baf980fb87"
+    },
+    "node_modules/require-addon/lib/node.js": {
+      "package": "require-addon",
+      "bytes": 2020,
+      "sha256": "348d94741c56de23e1c76764cc49950106a548c823f15b22e7b45cbfe33f99c3"
+    },
+    "node_modules/require-addon/package.json": {
+      "package": "require-addon",
+      "bytes": 1518,
+      "sha256": "c0538d0e146100780251fd6c086458c3b85e529a2a45157341870f5b7e361811"
+    },
+    "node_modules/which-runtime/LICENSE": {
+      "package": "which-runtime",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "node_modules/which-runtime/index.js": {
+      "package": "which-runtime",
+      "bytes": 1469,
+      "sha256": "cbc7a5f43ad5f669611d6adad71e4b85636bf1b5bf7f14ed6555084784dbce30"
+    },
+    "node_modules/which-runtime/package.json": {
+      "package": "which-runtime",
+      "bytes": 863,
+      "sha256": "0f66f520c39af77fdc3ca898fcdc27c7c0cb90f5e9ee48c6c5a7dc4cec1cf2f3"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+// The Harness CLI, as the plugin delivers it: run the committed bundle (ADR 0014, Q54).
+import(require('node:url').pathToFileURL(require('node:path').join(__dirname, '..', 'lib', 'harness.mjs')).href)
+  .catch(error => { console.error(error); process.exitCode = 1; });
