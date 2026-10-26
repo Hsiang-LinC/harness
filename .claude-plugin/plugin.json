@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.1.0-dev.snapshot.4",
+  "version": "1.1.0",
   "description": "Matt Pocock's engineering methods with code-enforced seams: grill, Spec, tickets, TDD and independent review, with progress in Linear and GitHub.",
   "author": {
     "name": "Danny"
