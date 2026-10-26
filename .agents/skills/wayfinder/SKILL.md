@@ -22,7 +22,7 @@ The map is a single issue on this repo's issue tracker, labelled `wayfinder:map`
 
 The map is an **index**, not a store. It lists the decisions made and points at the tickets that hold their detail; a decision lives in exactly one place, its ticket, so the map never restates it, only gists it and links.
 
-**Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** The issue tracker should have been provided to you. If not, tell the user to run `/setup`. Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them; if it has none, or the `wayfinder:*` labels do not exist, report wayfinding as unavailable rather than improvising a map. On Linear, the map, its tickets, their parents, labels and blocking edges are created with `harness issue publish` in the [plain-issue batch format](issue-batch-format.md), which only adds. Decision tickets carry no record: they are never bound or claimed through `work claim`.
+**Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** The issue tracker should have been provided to you. If not, tell the user to run `/setup`. Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them; if it has none, or the `wayfinder:*` labels do not exist, report wayfinding as unavailable rather than improvising a map. On Linear, write the map, its tickets, their parents, labels and blocking edges as one plain-issue batch and return it: the caller publishes it, and publishing only adds. Decision tickets carry no record: they are never bound or claimed through the ticket claim.
 
 ### The map body
 
@@ -122,7 +122,7 @@ User invokes with a map (URL or number). A ticket is **optional**: without one, 
 1. Load the **map**: the low-res view, not every ticket body.
 2. Choose the ticket. If the user named one, use it. Otherwise take the first frontier ticket in order. **Claim it**: assign it to yourself before any work.
 3. Resolve it as the type its `wayfinder:<type>` label names (see [Ticket Types](#ticket-types)). Read the label, not just the body: the body never states the type. **Zoom as needed**: fetch the full body of any related or closed ticket on demand; call the Skill tool for whichever skills the `## Notes` block names. If in doubt, call the Skill tool twice, for "grilling" and "domain-modeling".
-4. Record the resolution: `harness work resolve --issue <uuid> --file <{"resolution": "…"}>` posts the answer as the resolution comment and closes the ticket, read back; rerun it with the identical resolution after an interruption. Then **append a context pointer** to the map's Decisions-so-far.
+4. Return the resolution, `{"resolution": "…"}`: the caller posts it as the resolution comment and closes the ticket. Then **append a context pointer** to the map's Decisions-so-far.
 5. Add newly-surfaced tickets (create-then-wire); graduate any fog the answer has made specifiable, clearing each graduated patch from **Not yet specified** so it lives only as its new ticket. If the answer reveals that a ticket (this one or another) sits beyond the destination, **rule it out of scope** rather than resolving it on the route. If the decision invalidates other parts of the map, update or delete those tickets.
 
 The user may run unblocked tickets in parallel, so expect other sessions to be editing the tracker concurrently.

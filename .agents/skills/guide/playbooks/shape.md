@@ -14,7 +14,7 @@ mode: An idea that can be settled with the human in one session
 7. Confirm the outcome with the human. This is an inner gate, not the exit.
 8. Make the outcome a fact by the first branch that fits:
    1. A build needing a Spec: `/to-spec`, on the idea's issue; an untracked idea is first `harness issue intake --role none`.
-   2. A build one ticket can hold: `harness issue intake --role none`, then `harness work read` for its source, then a record candidate reviewed by a fresh subagent, its report posted on the issue and recorded with `harness review record --report-url`, then `harness work bind`. Each refusal names what resolves it. Intake alone creates no record.
+   2. A build one ticket can hold: [Prepare](../procedures/prepare.md), with `entryMethod: "implement"` in the record.
    3. Nothing to build: `/domain-modeling` for an ADR or glossary entry, or an alignment record entry; commit it.
 9. At most three review rounds in step 8. When they run out, or the human's answer changes the destination, go to Scope change or `harness work escalate`.
 
@@ -24,4 +24,4 @@ mode: An idea that can be settled with the human in one session
 - `harness work read` shows the issue `ready-for-agent` with a bound record.
 - A commit adds the ADR, glossary or alignment entry, and no issue was opened to build it.
 
-**Reply:** one line naming the fact, its link, and the playbook that takes over (Feature, `/implement`, or none).
+**Reply:** one line naming the fact, its link, and the playbook that takes over (Feature, Small change, or none).

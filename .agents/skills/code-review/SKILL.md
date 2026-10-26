@@ -26,7 +26,7 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 
 ### 2. Identify the spec source
 
-For a Harness ticket, the spec source is its record (`harness ticket read`): its acceptance criteria, or the Spec file when its `acceptanceSource` is `spec`. Nothing else is the spec. The Spec axis also checks test-first evidence: every seam the diff tests is named by the Spec or is a public boundary that fits the acceptance, and every new or changed test fails against the fixed point (the reviewer runs it there). The verdict is `fail` while a hard Standards violation or a missing, partial or wrong requirement remains; judgement-call smells do not fail it.
+For a Harness ticket, the caller passes the spec source: the record's acceptance criteria, or the Spec file when its `acceptanceSource` is `spec`. Nothing else is the spec. The Spec axis also checks test-first evidence: every seam the diff tests is named by the Spec or is a public boundary that fits the acceptance, and every new or changed test fails against the fixed point (the reviewer runs it there). The verdict is `fail` while a hard Standards violation or a missing, partial or wrong requirement remains; judgement-call smells do not fail it.
 
 Otherwise, look for the originating spec, in this order:
 
