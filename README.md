@@ -1,91 +1,122 @@
 # Harness
 
-Engineering methods with tracked work in Linear and delivery in GitHub.
-Requires Node.js 22.12+, Git, GitHub CLI (`gh`), and a Linear account.
+Harness is a plugin for Claude Code and Codex. It gives your agent a set of
+engineering methods (grilling, Specs, tickets, TDD, code review) and a small
+CLI that records the work in Linear and delivers it through GitHub.
 
-## 1. Install
+You describe what you want. The agent picks a route: shape an idea, fix a bug,
+build a feature from a Spec, or a small change. It follows that route step by
+step. Every step that writes Linear or GitHub goes through the `harness` CLI,
+which checks the current facts first and refuses with the reason when a step
+is not allowed yet: for example, merging before review has passed, or claiming
+a ticket someone else holds. You keep the product decisions and the final
+merge to your default branch.
 
-### Codex
+## Requirements
+
+- Node.js 22.12 or later
+- Git and the GitHub CLI (`gh`)
+- A Linear workspace with a team and a project for this work
+
+## Install
+
+Codex:
 
 ```sh
 codex plugin marketplace add Hsiang-LinC/harness
 codex plugin add harness@harness
 ```
 
-### Claude Code
+Claude Code:
 
 ```text
 /plugin marketplace add Hsiang-LinC/harness
 /plugin install harness@harness
 ```
 
-## 2. Run setup
+No `npm install` is needed. The CLI and its dependencies ship inside the
+plugin.
 
-Open your project and run:
+## Set up a repository
 
-- **Codex:** `$setup`
-- **Claude Code:** `/harness:setup`
+Run setup once in each repository:
 
-Setup configures your Linear project and repository workflow. Connect the
-Linear integration in your agent and provide the team and project to use.
+| Codex | Claude Code |
+| --- | --- |
+| `$setup` | `/harness:setup` |
 
-## 3. Connect Linear and GitHub
+Setup asks which Linear team and project to use, shows the files it will
+write (tracker notes, triage labels, a policy file) and writes them only after
+you confirm.
 
-Ask your agent to connect the Harness CLI to Linear using your Linear API
-key. Enter the key locally; do not paste it into chat or commit it.
+Then connect the two services:
 
-Sign in to GitHub:
+- **Linear:** ask your agent to connect the Harness CLI to Linear. It runs
+  `harness auth login` in the browser, or `harness auth import --stdin` for an
+  API key. Type the key into your terminal, never into the chat.
+- **GitHub:** run `gh auth login`.
 
-```sh
-gh auth login
-```
+## Use it
 
-Once configured, start work with `$guide <goal>` in Codex or
-`/harness:guide <goal>` in Claude Code.
+Start with the guide and say what you want:
 
-## Reference
+| Codex | Claude Code |
+| --- | --- |
+| `$guide <goal>` | `/harness:guide <goal>` |
 
-Methods keep their original names
-under the plugin's namespace (for example `harness:tdd` in Claude Code).
+The guide picks a playbook, such as Shape, Bug fix, Feature or Small change,
+and the agent copies its steps into the session's todo list, so you can see
+what comes next. Run the guide with no goal to choose the next step from the
+current conversation. A hook points the agent to the guide on its own for
+requests that change the repository, but you can always call it yourself.
 
-Invoke `/harness:guide <goal>` in Claude Code or `$guide <goal>` in Codex at
-the start or during work. With no goal, it uses the current conversation to
-choose the next playbook or method. You can invoke it yourself even when the
-agent has not selected it automatically.
+Some methods only you can start, because they need your answers. The grilling
+in Shape is one. When a playbook reaches such a step, the agent asks you to run
+it, for example `$grill-with-docs` in Codex.
 
-The methods are Matt Pocock's engineering skills, edited only where they meet
-the `harness` CLI; they keep their [MIT notice](.agents/skills/LICENSE-matt-pocock).
-`interrogate` is Lauren Tan's, from pstack, edited to run its second reviewer
-on the other vendor's CLI; it keeps its [MIT notice](.agents/skills/LICENSE-pstack).
-It needs that CLI installed and signed in (Codex from Claude Code, Claude Code
-from Codex) and stops with the fix when it is not.
+## What's inside
 
-The CLI requires Node 22.12 or later and Git/gh for applicable GitHub operations.
-Run `node '<installed-plugin-root>/bin/harness' --help`; each command has `--help`.
-The product includes JavaScript and native credential-store dependencies; no
-npm install is needed. Use `auth login` for configured browser PKCE, or explicitly import a Linear key with `auth import --stdin`,
-inspect `auth status` or remove it with `auth logout`. Saved credentials use the
-OS store; Linux needs an unlocked Secret Service. Native calls have deadlines
-and fail without plaintext fallback. CI may explicitly set one of
-`LINEAR_API_KEY` / `LINEAR_ACCESS_TOKEN`. GitHub uses `GITHUB_TOKEN` or `gh auth`.
-Keep credentials out of argv, chat and repository files. Browser login requires the registered public client ID and exact loopback
-callback; `auth login --help` shows overrides. Saved OAuth credentials refresh
-under a crash-released per-credential native lock. Status stays offline; an
-expired recovery window requires login again. If the app is not configured,
-the CLI explains that prerequisite and retains explicit key import.
+- **Methods.** Matt Pocock's engineering skills under their original names,
+  edited only where they meet the CLI. In Claude Code they sit under the
+  plugin's namespace, for example `/harness:tdd`.
+- **`interrogate`**, from Lauren Tan's pstack: a second review run on the other
+  vendor's CLI (Codex from Claude Code, Claude Code from Codex). It needs that
+  CLI installed and signed in, and stops with the fix if it is not.
+- **The guide and its playbooks**, which choose and order the methods.
+- **The `harness` CLI**, the only writer of tracked work. Run
+  `node '<plugin-root>/bin/harness' --help`; every command has its own
+  `--help`.
 
-SessionStart, UserPromptSubmit and SubagentStart hooks add one line: a request
-that changes the repository or moves tracked work starts from the guide, Linear
-writes go through the CLI where it has the operation, and where it is installed. Installation
-alone does not enable trusted hook execution. If hooks are unavailable, the
-plugin root is three directories above a loaded method's `SKILL.md`; run
-`node '<root>/bin/harness' --help` there. No shell PATH or development checkout
-is required.
+## Credentials
+
+- Saved Linear credentials live in the OS credential store. Linux needs an
+  unlocked Secret Service. There is no plaintext fallback.
+- `harness auth status` shows what is configured without going online;
+  `harness auth logout` removes it.
+- In CI, set `LINEAR_API_KEY` or `LINEAR_ACCESS_TOKEN`. GitHub uses
+  `GITHUB_TOKEN` or your `gh` login.
+- Keep keys out of command-line arguments, chat and repository files.
+
+## Hooks
+
+The plugin adds one line of context at session start, on each prompt and when
+a subagent starts. The line names the installed CLI path and says that changes
+start from the guide. Your agent may ask you to trust the hooks first. Without
+them, the plugin root is three directories above any loaded method's
+`SKILL.md`, and the CLI is `bin/harness` there.
+
+## Versions
+
+Stable releases have plain tags such as `v1.0.0`. Tags ending in
+`-dev.snapshot.N` are candidates under test, not releases. Every tag records
+the source commit it was built from in a release metadata file at the root.
 
 ## License and feedback
 
-Harness's own delivered code is [MIT licensed](LICENSE). The third-party notices
-linked above and licenses alongside bundled native dependencies remain applicable.
-Report bugs and requests in [GitHub Issues](https://github.com/Hsiang-LinC/harness/issues).
-Maintainers triage actionable work into Linear; GitHub Issues is the public
-conversation and Linear owns internal work management.
+Harness's own code is [MIT licensed](LICENSE). The methods keep their
+[Matt Pocock MIT notice](.agents/skills/LICENSE-matt-pocock) and
+`interrogate` keeps its [pstack MIT notice](.agents/skills/LICENSE-pstack).
+Bundled native dependencies keep their own licenses.
+
+Report bugs and requests in
+[GitHub Issues](https://github.com/Hsiang-LinC/harness/issues).
