@@ -1,9 +1,7 @@
 ---
 id: prepare
-mode: Procedure, called by journeys and never selected by the guide. Make a request a reviewed, bound record before any work on it
+mode: Procedure, called by journeys and never selected by the guide. Make a request a reviewed, bound record before the first write to the repository
 ---
-
-**No work before a bound record. A request to stop early ("stop before you edit any code", "stop at a failing test") still takes this path: the stop is a point in Execute, never a reason to skip the record.**
 
 1. For an existing issue, `harness work read --issue <uuid>`. A bound record (`ready-for-agent`) means this procedure is done. A request not worked now is `harness issue intake` with its default role, `needs-triage`, and stops here; anything else that needs triage is not this procedure's: return it to the journey.
 2. A request this session takes straight to bind: `harness issue intake --issue <new UUID> --file <request> --role none`, then `harness work read` for its `source.sourceDigest`.

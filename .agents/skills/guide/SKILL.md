@@ -6,19 +6,81 @@ disable-model-invocation: false
 
 # Guide
 
-Invoke `/harness:guide` in Claude Code or `$guide` in Codex whenever you want to choose the next route, including mid-task. Give it a goal, or invoke it alone to use the current conversation. Reassess the route against the person's current goal and the recorded work facts; keep existing decisions, constraints and permissions in force.
+## What Harness is
 
-Find the row that fits the work, then open its playbook, or load its method, and follow that. Read the playbook or the method's SKILL.md before stating what it does or skipping a step of it: the rows here are for choosing only.
+Harness is an installed SWE system, separate from the repository you work in. It brings:
+- **Methods**: skills that do one kind of engineering work, beside this guide in `../<name>/SKILL.md`.
+- **Journeys**: playbooks in `playbooks/` that compose methods, CLI edges and procedures into one route to an exit.
+- **The `harness` CLI**: the only writer of tracked work in Linear.
 
-- Work on an issue goes through the `harness` CLI, the only writer of tracked work. `--issue` takes the issue's UUID or the identifier a person names, such as `DANNY-319`. `harness work read --issue <id>` lists which edges are open on an issue now and why the others are not; every refusal names what resolves it. The CLI never chooses the mode; you do, from this table.
-- On a CLI error, take the remedy the error names, such as asking to run outside the sandbox on `CREDENTIAL_MISSING`. Never reach the same data another way, such as the Linear connector in place of a `harness` read.
-- Files you write only as CLI input or review output (records, batches, requests, verdicts, transcripts) go in the OS temp directory (`$TMPDIR`, falling back to `/tmp`), at an absolute path your later `harness` calls can read, never in the repository. They are scratch: Linear holds what the CLI writes from them. Repository content a method changes on purpose, such as `GLOSSARY.md` or an ADR, is committed on the work's branch.
-- Once a playbook is chosen, copy its steps verbatim into your session todo list. A step you skip stays in the list as `skip: <reason>`. The last step counts as much as the first. A playbook ends only when its **Exit** fact holds and you have sent its **Reply** line: the reply is part of the exit, even when the user's last question was only whether anything is left. The list is for the human to read; durable progress lives in Linear and GitHub.
-- Load a method when the user names it or asks for what it produces. When a playbook runs that method only after earlier steps, as Shape runs `/to-spec` after `/grill-with-docs`, asking for what it produces opens the playbook, not the method: "get a proper Spec" is Shape, not `/to-spec`. When one fits but the user has not asked, propose it and wait. Every method a playbook names ships with Harness, beside this guide in `../<name>/SKILL.md`. One you cannot load yourself is user-only, never missing: ask the user to start it, `/name` in Claude Code or `$name` in Codex, and once they have, follow that `SKILL.md`. Never load a similar method in its place, whether it ships with Harness or another plugin: `grilling` is not `grill-with-docs`.
-- After Bug fix or Feature, when the work is worth looking back on (a bug pattern that could recur, a build that went sideways), end the reply with one line suggesting `/retro` (`$retro` in Codex) and why. Otherwise say nothing about it: retro is the person's call, never a step, and nothing waits on it. With no one in the session, the suggestion is a closing comment on the PR or the issue, and the issue's state does not change.
-- Before the first engineering flow in a repository, `/setup` configures the tracker, triage labels, doc layout and Harness policy everything here assumes.
-- Journeys are the playbooks this table opens. They share five procedures in `procedures/`: [Prepare](procedures/prepare.md) makes a bound record, [Break down](procedures/break-down.md) publishes a reviewed ticket graph under a parent, [Execute](procedures/execute.md) runs one ticket's method under a claim, [Deliver](procedures/deliver.md) takes its reviewed head to a merged PR, and [Stop](procedures/stop.md) leaves claimed work stopped. This table never opens a procedure. Each playbook step names one method, one CLI edge or one procedure.
-- At a boundary between phases of work (grilling, implementation, QA), choose how to carry context with [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md).
+The repository supplies the code; Linear holds work state; GitHub holds code delivery. Harness connects them; it does not replace the repository's own conventions.
+
+## Before any work
+
+- **Repository not set up:** run `/setup` first. It configures the tracker, triage labels, doc layout and Harness policy everything here assumes. `/setup` is not a journey.
+- **Invoke this guide** (`/harness:guide` in Claude Code, `$guide` in Codex) to choose a route, at the start or mid-task. Without a goal, use the current conversation.
+- **Reassess** against the person's current goal and the recorded work facts. Keep existing decisions, constraints and permissions in force.
+
+## Choosing a route
+
+- Find the row in **Work modes** that fits, then open its playbook or load its method.
+- Read the playbook or the method's `SKILL.md` before stating what it does or skipping a step. Rows are for choosing only.
+- No row fits: see **No row fits**.
+
+## Bound record before the first repository write
+
+Nothing enforces this; you hold it.
+- **What:** the reviewed acceptance criteria and context of the work, stored on its Linear issue by `harness work bind`.
+- **Why:** code review, acceptance, session handoff and Linear tracking all check against it. A write before it has no reference and is invisible.
+- **When:** in a journey, run [Prepare](procedures/prepare.md) before the first write to the repository.
+- **Not writes:** reading code, proposing a change.
+- **Not bound:** `/setup`; it is not a journey and needs no bound record.
+
+## Tracked work goes through the CLI
+
+- Every read and write of tracked work uses `harness`. `--issue` takes a UUID or an identifier such as `DANNY-319`.
+- `harness work read --issue <id>` lists the open edges and why the others are closed.
+- **On a refusal or error:** take the remedy it names (e.g. ask to run outside the sandbox on `CREDENTIAL_MISSING`).
+- **Never** reach the same data another way, such as the Linear connector in place of a `harness` read.
+- The CLI never chooses the mode; you do, from **Work modes**.
+
+## Files
+
+- **CLI input and review output** (records, batches, requests, verdicts, transcripts): write to `$TMPDIR` (else `/tmp`) at an absolute path. Never in the repository; Linear keeps what the CLI writes from them.
+- **Repository content a method changes on purpose** (`GLOSSARY.md`, an ADR): commit on the work's branch.
+
+## Running a playbook
+
+- Copy its steps verbatim into your session todo list.
+- A skipped step stays as `skip: <reason>`. The last step counts as much as the first.
+- It ends only when its **Exit** fact holds **and** you have sent its **Reply** line, even if the last question was only whether anything is left.
+- The list is for the human; durable progress lives in Linear and GitHub.
+
+## Structure of journeys
+
+- Journeys share five procedures in `procedures/`. **Work modes** never opens one directly.
+  - [Prepare](procedures/prepare.md): makes a bound record.
+  - [Break down](procedures/break-down.md): publishes a reviewed ticket graph under a parent.
+  - [Execute](procedures/execute.md): runs one ticket's method under a claim.
+  - [Deliver](procedures/deliver.md): takes the reviewed head to a merged PR.
+  - [Stop](procedures/stop.md): leaves claimed work stopped.
+- Each playbook step names one method, one CLI edge or one procedure.
+- At a phase boundary (grilling, implementation, QA), choose how to carry context with [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md).
+
+## Methods
+
+- Every method a playbook names ships with Harness.
+- **Load** one when the person names it or asks for what it produces.
+- **A playbook runs it after earlier steps** (Shape runs `/to-spec` after `/grill-with-docs`): asking for its output opens the playbook. "Get a proper Spec" is Shape, not `/to-spec`.
+- **Fits but not asked:** propose it and wait.
+- **Cannot load it yourself:** it is user-only, never missing. Ask the person to start it (`/name` in Claude Code, `$name` in Codex), then follow its `SKILL.md`.
+- **Never** substitute a similar method from Harness or another plugin: `grilling` is not `grill-with-docs`.
+
+## After Bug fix or Feature
+
+- Worth looking back on (a recurring bug pattern, a build that went sideways): end the reply with one line suggesting `/retro` (`$retro` in Codex) and why.
+- Otherwise say nothing about it. Retro is the person's call, never a step; nothing waits on it.
+- No one in the session: put the suggestion in a closing comment on the PR or issue; the issue's state does not change.
 
 ## Work modes
 
