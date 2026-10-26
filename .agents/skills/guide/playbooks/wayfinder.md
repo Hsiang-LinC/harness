@@ -3,14 +3,14 @@ id: wayfinder
 mode: Work still unclear that needs more than one session to decide
 ---
 
-**Find the way through work too foggy for one session. Produce decisions, never deliverables, and hand over to Shape or `/to-spec`, never to implementation.**
+**Find the way through work too foggy for one session. Produce decisions, never deliverables, and hand over to Shape, never to implementation.**
 
 1. `/wayfinder`, one session at a time: it charts the map, then claims and resolves one ticket per session. If charting finds no fog, stop and switch to Shape.
 2. Publish each batch `/wayfinder` returns (the map, new tickets, their edges and labels) with `harness issue publish --file <batch>`, in the format `harness issue format` prints; rerun the same batch after an interruption.
 3. Record each resolution it returns with `harness work resolve --issue <uuid> --file <resolution>`, which posts the comment and closes the ticket; rerun it with the identical resolution after an interruption.
 4. When a ticket wants the work done rather than decided, do not do it: that is the edge of the map. This holds even when the map's Notes ask for execution.
 5. When the map has no open child ticket, hand over by its destination:
-   1. A Spec: `/to-spec`.
+   1. A Spec: Shape, at its Spec branch (step 8.1).
    2. A decision with nothing to build: `/domain-modeling`, and commit it.
    3. Anything left to settle or build: Shape.
 

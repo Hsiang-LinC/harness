@@ -7,6 +7,8 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
+When a caller passes a ticket's record, its `branch` and `base`, work on that branch: the record and the files its `authoritativeContext` names are the whole brief. Such a run never asks the person: wherever this skill says to ask the user, return no head and a `needs` line naming what is missing, and stop.
+
 When exploring the codebase, read `GLOSSARY.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
 
 ## Redact
@@ -135,4 +137,12 @@ Required before declaring done:
 - [ ] Regression test passes (or absence of seam is documented)
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
-- [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
+- [ ] The hypothesis that turned out correct is stated in the commit message and the returned report, so the next debugger learns
+
+## Review and return
+
+When the caller passes `review: true` with the branch and its base, the fix is already built: merge the base into the branch, resolve any conflict, commit, and do only this section.
+
+When a caller passed the work, commit it to the branch, then call the Skill tool with "code-review" against `base`, the acceptance source being the record. At most three rounds, each with fresh subagents; on `fail`, fix, commit and review again. A `fail` after the third round, or a finding only a person can decide, goes back to the caller.
+
+Return the head you reviewed, the final verdict and the final report body, which states the root cause and the regression test (or the seam's absence) under those headings. Posting the report and recording the verdict are the caller's.

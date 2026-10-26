@@ -16,11 +16,11 @@ The issue tracker and triage label vocabulary should have been provided to you. 
 
 The Spec review checks these seams against the requirements; ask the user only when recorded intent cannot settle one.
 
-3. Write the spec using the template below at `docs/specs/<slug>.md`. Its tracker issue is the request it came from: record its authority once with `harness spec track --issue <issue> --path docs/specs/<slug>.md --branch <feature branch> --target <final target>`.
+3. Write the spec using the template below at `docs/specs/<slug>.md`. Its tracker issue is the request it came from.
 
-4. Review it independently. Give a fresh subagent the [Spec review prompt](spec-review.md), the file and its blob id (`git hash-object --no-filters -- <file>`). Fix findings and review again with a new subagent, at most three rounds; a `fail` after the third, or a question recorded intent cannot answer, goes to the user. Never review your own Spec: without a fresh subagent, say so and stop. Post the final report on the issue and record it: `harness review record --issue <issue> --review spec --candidate <blob> --verdict <pass|fail> --report-url <report URL>`. When the Spec will be implemented directly, without tickets, the reviewer also judges the record candidate and you add `--record <its contextDigest>`.
+4. Review it independently. Give a fresh subagent the [Spec review prompt](spec-review.md), the file and its blob id (`git hash-object --no-filters -- <file>`). Fix findings and review again with a new subagent, at most three rounds; a `fail` after the third, or a question recorded intent cannot answer, goes to the user. Never review your own Spec: without a fresh subagent, say so and stop. When the caller says the Spec will be implemented directly, without tickets, it passes a record candidate too and the reviewer judges both.
 
-5. Publish it with `harness spec publish --issue <issue> --file docs/specs/<slug>.md`, which appends the reviewed file to the feature branch. Glossary or ADR edits the grilling made go on that branch: commit and push them before `spec publish`, which appends onto the live head; if the branch does not exist yet, they go with the first ticket's change. Review verdicts and transcripts stay out of the repository. Once `spec publish` succeeds, the feature branch holds the Spec: delete the working copy from any tree not on that branch. Then either break it down with `to-tickets`, or implement it directly: `harness work bind` with a record whose `source` is the Spec (`{kind: "spec", path, branch, blob}`), then the guide's Execute procedure.
+5. Return the Spec's path and blob id, the final verdict and the final report body. Recording, publishing and what follows are the caller's; review verdicts and transcripts stay out of the repository.
 
 <spec-template>
 

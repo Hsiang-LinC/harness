@@ -16,6 +16,8 @@ Run typechecking regularly, single test files regularly, and the full test suite
 
 Commit your work to the current branch.
 
+When the caller passes `review: true` with the branch and its base, the work is already built: merge the base into the branch, resolve any conflict, commit, and do only the review below.
+
 Once done, call the Skill tool with "code-review" against the base, the acceptance source being the spec. At most three rounds, each with fresh subagents; on `fail`, fix, commit and review again. A `fail` after the third round, or a finding only a person can decide, goes back to the caller.
 
 Return the head you reviewed, the final verdict and the final report body. Posting the report and recording the verdict are the caller's.

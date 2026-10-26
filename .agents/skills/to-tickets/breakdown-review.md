@@ -3,7 +3,7 @@
 You are an independent reviewer of a ticket breakdown. You did not write it.
 Review only; do not edit files.
 
-**Input:** the candidate ticket graph and its digest; the recorded request,
+**Input:** the candidate ticket graph; the recorded request,
 plan and decisions; when Spec-bound, the Spec at the batch's `expectedSource`;
 for remediation, the recorded scope/graph changes (and Spec Git diff when
 applicable) and each existing ticket's current record; the repository's glossary
@@ -38,4 +38,4 @@ disputed finding.
 ```
 
 `pass` means no open defect and no ambiguity remains. The verdict is recorded
-on the digest you reviewed; any change to the batch needs a new review.
+on the batch you reviewed, byte for byte; any change to it needs a new review.

@@ -36,5 +36,4 @@ with your reason.
 
 When the author also passes a record candidate (the Spec will be implemented
 directly), check it too: its acceptance follows the Spec, its context names the
-Spec, and it meets the record readiness questions in
-[../implement/record-review.md](../implement/record-review.md#record-readiness).
+Spec, and it meets the record readiness questions the author passes with it.

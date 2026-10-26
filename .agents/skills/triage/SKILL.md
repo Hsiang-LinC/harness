@@ -1,6 +1,6 @@
 ---
 name: triage
-description: Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs. Use when the user asks to triage existing issues or PRs. Recording a request as a needs-triage issue is `harness issue intake`, not triage.
+description: Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs. Use when the user asks to triage existing issues or PRs. Recording a request as a needs-triage issue is intake, not triage.
 disable-model-invocation: false
 ---
 
@@ -69,14 +69,14 @@ Show counts and a one-line summary per item. Let the maintainer pick.
 
 1. **Gather context.** Read the full issue or PR (body, comments, labels, author, dates; for a PR, the diff too). Parse any prior triage notes so you don't re-ask resolved questions. Explore the codebase using the project's domain glossary, respecting ADRs in the area. Run two checks against the codebase: (a) **redundancy**: search for an existing implementation of the requested behavior by domain concept (not just the request's wording), and report where you looked. If found, it's an already-implemented `wontfix` (step 5). (b) **prior rejection**: read `.out-of-scope/*.md` and surface any that resembles this request.
 
-2. **Recommend.** Tell the maintainer your category and state recommendation with reasoning (once they agree, set the category with `harness issue categorize --issue <issue> --category bug|enhancement`, never through the connector), plus a brief codebase summary relevant to the request (including whether it's already implemented). Wait for direction.
+2. **Recommend.** Tell the maintainer your category and state recommendation with reasoning (once they agree, the caller sets the category), plus a brief codebase summary relevant to the request (including whether it's already implemented). Wait for direction.
 
 3. **Verify the claim.** Before any grilling, check that the claim holds up. For a bug, reproduce it from the reporter's steps. For a PR, confirm the diff does what it claims: check it out, run the relevant tests or commands. Report what happened: confirmed (with code path), failed, or insufficient detail (a strong `needs-info` signal). A confirmed verification makes a much stronger agent brief.
 
 4. **Grill (if needed).** If the request needs fleshing out, call the Skill tool twice, for "grilling" and "domain-modeling", and grill it into shape a round of questions at a time, sharpening domain terms and updating `GLOSSARY.md`/ADRs inline as decisions land.
 
 5. **Apply the outcome:**
-   - `ready-for-agent`: write the brief ([AGENT-BRIEF.md](AGENT-BRIEF.md)) as a record candidate on the original issue, leaving the reporter's title and body as they are: what to build becomes `summary`, the criteria `acceptanceCriteria`, the files and links `authoritativeContext`; add `entryMethod: "implement"`, `intentBasis` (the request it answers), `acceptanceSource: "record"` and `source: {kind: "brief", digest}` with the `source.sourceDigest` that `harness work read --issue <issue>` prints after your last edit to the issue. A fresh subagent reviews the candidate with [triage-review.md](triage-review.md). Repair and review again, at most three rounds; never review your own brief. Record the verdict with `harness review record --issue <issue> --review triage --file <record> --verdict <pass|fail> --report-url <report URL>`; a `fail` returns the issue to `needs-triage`. After a pass, `harness work bind --issue <issue> --file <record> --expected-source <digest> --expected-generation <n>` writes the record and sets `ready-for-agent`; never set that role by hand.
+   - `ready-for-agent`: write the brief ([AGENT-BRIEF.md](AGENT-BRIEF.md)) as a record candidate on the original issue, leaving the reporter's title and body as they are: what to build becomes `summary`, the criteria `acceptanceCriteria`, the files and links `authoritativeContext`; add `entryMethod` (`diagnosing-bugs` for a bug, otherwise `implement`), `intentBasis` (the request it answers), `acceptanceSource: "record"` and `source: {kind: "brief", digest}` with the issue's source digest, which the caller reads after your last edit to the issue. A fresh subagent reviews the candidate with [triage-review.md](triage-review.md). Repair and review again, at most three rounds; never review your own brief. Return the record, the final verdict and the final report body: the caller records the verdict and binds the record, which sets `ready-for-agent`, and a `fail` returns the issue to `needs-triage`. Never set that role by hand.
    - `ready-for-human`: same structure as an agent brief, but note why it can't be delegated (judgment calls, external access, design decisions, manual testing).
    - `needs-info`: post triage notes (template below).
    - For `wontfix`, close the issue, with the comment depending on *why*:
@@ -87,7 +87,7 @@ Show counts and a one-line summary per item. Let the maintainer pick.
 
 ## Quick state override
 
-If the maintainer says "move #42 to ready-for-agent", trust their intent and skip grilling, but the role still comes from `bind`: triage it in brief: write a short triage brief from the issue description and the maintainer's request as a record candidate with `source: {kind: "brief", digest}` and `intentBasis` naming the maintainer's request, have a fresh subagent review it with [triage-review.md](triage-review.md) (`harness review record --review triage --file <record> …`), then run `harness work bind`. Bind refuses a `needs-triage` issue from any other source kind. A request the user wants worked in this session takes the same path after `harness issue intake --issue <new UUID> --file <request> --role none`. A failed review returns the issue to `needs-triage`. Other roles follow the issue tracker's paths in `docs/agents/issue-tracker.md`; confirm before changing them.
+If the maintainer says "move #42 to ready-for-agent", trust their intent and skip grilling, but the role still comes from binding the record: triage it in brief: write a short triage brief from the issue description and the maintainer's request as a record candidate with `source: {kind: "brief", digest}` and `intentBasis` naming the maintainer's request, have a fresh subagent review it with [triage-review.md](triage-review.md), and return it as above. A `needs-triage` issue binds only from a brief. A request the user wants worked in this session takes the same path once the caller has recorded it as an issue. A failed review returns the issue to `needs-triage`. Other roles follow the issue tracker's paths in `docs/agents/issue-tracker.md`; confirm before changing them.
 
 ## Needs-info template
 
