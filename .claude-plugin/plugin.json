@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.1.0",
+  "version": "2.0.0-rc.2",
   "description": "Matt Pocock's engineering methods with code-enforced seams: grill, Spec, tickets, TDD and independent review, with progress in Linear and GitHub.",
   "author": {
     "name": "Danny"
@@ -17,6 +17,7 @@
     "./.agents/skills/acceptance",
     "./.agents/skills/code-review",
     "./.agents/skills/codebase-design",
+    "./.agents/skills/deliver",
     "./.agents/skills/diagnosing-bugs",
     "./.agents/skills/domain-modeling",
     "./.agents/skills/grill-me",

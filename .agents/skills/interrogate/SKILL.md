@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Two reviewers from different model vendors adversarially review code changes: one on this session's host, one on the other vendor's CLI. The adversarial signal comes from model diversity, not assigned personas. The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
-Use this when a change needs a second vendor's perspective. Routine review, including a Harness ticket's recorded `code` review, stays with `code-review`, whose reviewers run on this host; this skill records nothing.
+Use this when a change needs a second vendor's perspective. Routine review, including a tracked PR's code review, stays with `code-review`, whose reviewers run on this host. When this skill's verdict is the source of a review saved with `harness review save`, the report says `reviewer: other-vendor`.
 
 ## Step 1, Scope
 

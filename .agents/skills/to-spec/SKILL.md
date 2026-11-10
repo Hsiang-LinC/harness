@@ -14,13 +14,11 @@ The issue tracker and triage label vocabulary should have been provided to you. 
 
 2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
 
-The Spec review checks these seams against the requirements; ask the user only when recorded intent cannot settle one.
+Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below at `docs/specs/<slug>.md`. Its tracker issue is the request it came from.
+3. Write the spec using the template below as a repository document (`docs/specs/<slug>.md`), delivered by a pull request whose body says `Delivers: <issue>`.
 
-4. Review it independently. Give a fresh subagent the [Spec review prompt](spec-review.md), the file and its blob id (`git hash-object --no-filters -- <file>`). Fix findings and review again with a new subagent, at most three rounds; a `fail` after the third, or a question recorded intent cannot answer, goes to the user. Never review your own Spec: without a fresh subagent, say so and stop. When the caller says the Spec will be implemented directly, without tickets, it passes a record candidate too and the reviewer judges both.
-
-5. Return the Spec's path and blob id, the final verdict and the final report body. Recording, publishing and what follows are the caller's; review verdicts and transcripts stay out of the repository.
+4. Have a fresh subagent review it with the [document review prompt](spec-review.md); never review your own Spec. Save its report with `harness review save --target pr:<n> --file <report>`. On `fail`, fix and review again, up to three rounds.
 
 <spec-template>
 

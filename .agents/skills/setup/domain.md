@@ -38,6 +38,13 @@ Multi-context repo (presence of `GLOSSARY-MAP.md` at the root):
         └── docs/adr/
 ```
 
+## Document directories
+
+The `harness` CLI reads this list from the default branch to tell documents from code. List each directory of Specs, ADRs and other documents:
+
+- `docs/adr`
+- `docs/specs`
+
 ## Use the glossary's vocabulary
 
 When your output names a domain concept (in an issue title, a refactor proposal, a hypothesis, a test name), use the term as defined in `GLOSSARY.md`. Don't drift to synonyms the glossary explicitly avoids.

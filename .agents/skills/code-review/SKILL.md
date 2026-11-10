@@ -20,15 +20,13 @@ Whatever the user said is the fixed point (a commit SHA, branch name, tag, `main
 
 Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
 
-For uncommitted work, pin the base SHA and review `git diff <base>` plus every new file, even unstaged, so working changes are not left out; record the exact scope reviewed.
-
 Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here, not inside two parallel sub-agents.
 
 ### 2. Identify the spec source
 
-For a Harness ticket, the caller passes the spec source: the record's acceptance criteria, or the Spec file when its `acceptanceSource` is `spec`. Nothing else is the spec. The Spec axis also checks test-first evidence: every seam the diff tests is named by the Spec or is a public boundary that fits the acceptance, and every new or changed test fails against the fixed point (the reviewer runs it there). The verdict is `fail` while a hard Standards violation or a missing, partial or wrong requirement remains; judgement-call smells do not fail it.
+For a tracked work, the spec is its Acceptance section and the files its `Basis:` names (`harness read`); nothing else is the spec. The Spec axis also checks the correctness and security of the paths the diff changes, and test-first evidence: every seam the diff tests is named by the Spec or is a public boundary that fits the acceptance, and every new or changed test fails against the fixed point (the reviewer runs it there). The verdict is `fail` while a hard Standards violation or a missing, partial or wrong requirement remains; judgement-call smells do not fail it.
 
-Otherwise, look for the originating spec, in this order:
+For anything else, look for the originating spec, in this order:
 
 1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via the workflow in the tracker doc.
 2. A path the user passed as an argument.
@@ -80,6 +78,8 @@ If the spec is missing, skip the Spec sub-agent and note this in the final repor
 ### 5. Aggregate
 
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
+
+For a tracked PR, the agent that arranged the review saves each axis as its own report with `harness review save --target pr:<n> --file <report>`: `kind: code`, `axis` (`standards` or `spec`), `reviewed.head` (the head reviewed), `verdict` (`pass`, `fail`, or `incomplete` when a tool or source failed), `reviewer`, and `findings`, each with `severity` and the `source` that makes it blocking (the standard or spec line). A finding with no source is not blocking.
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
 

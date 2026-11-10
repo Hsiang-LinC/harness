@@ -39,16 +39,47 @@ Give each ticket its **blocking edges**: the other tickets that must complete be
 
 **Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
 
-### 4. Review the breakdown independently
+### 4. Quiz the user
 
-Write the breakdown as a batch file in the batch format the caller passes you, which the CLI owns: each ticket a record candidate, its blocking edges in `edges`. Give a fresh subagent the [breakdown review prompt](breakdown-review.md), the batch and its source. It answers the questions the user would have been asked (granularity, blocking edges, merge or split) and returns `pass` or `fail`. Fix its findings and review again with a new subagent, at most three rounds; a `fail` after the third, or a question the recorded intent cannot answer, goes to the user. Never review your own breakdown: if no fresh subagent is available, say so and stop.
+Present the proposed breakdown as a numbered list. For each ticket, show:
 
-Return the batch, the final verdict and the final report body. Recording the review and publishing the batch are the caller's; publishing reads every write back, so the caller reruns the same batch after an interruption.
+- **Title**: short descriptive name
+- **Blocked by**: which other tickets (if any) must complete first
+- **What it delivers**: the end-to-end behaviour this ticket makes work
 
-After a Spec revision, republish: decide every open child as `restamp` (unchanged), `rewrite` or `withdraw`, add new work as `create`, review the new batch, then return it. A child whose Spec or parent changed cannot be claimed until then.
+Ask the user:
 
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
+- Does the granularity feel right? (too coarse / too fine)
+- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
+- Should any tickets be merged or split further?
+
+Iterate until the user approves the breakdown.
+
+### 5. Publish the tickets
+
+Publish the approved tickets as works in one file: a `# Title` section per ticket, its relations on the lines right under the title, then the work definition. Blocking edges point at another section (`#2`) or an existing issue. Make each ticket a child of the work being broken down, and apply the `ready-for-agent` label unless instructed otherwise; the tickets are agent-grabbable by construction.
+
+```markdown
+# <Ticket title>
+Parent: <the work being broken down>
+Blocked by: #1, <issue>
+Labels: ready-for-agent
+Deliverable: pr
+
+## Goal
+The end-to-end behaviour this ticket makes work, from the user's perspective, not layer-by-layer implementation.
+
+## Acceptance
+- Criterion 1
+- Criterion 2
+```
+
+Run `harness create --input <file>`. After an interruption, rerun it with the same file. Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
 
 Do NOT close or modify any parent issue.
 
-In the summary and acceptance criteria, avoid specific file paths or code snippets (they belong in `authoritativeContext`): they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
+### 6. Review the breakdown
+
+Give a fresh subagent the [breakdown review prompt](breakdown-review.md) and the parent; never review your own breakdown. Save its report with `harness review save --target <parent> --file <report>`. On `fail`, fix with `harness update` or `harness create`, then review again with a new subagent; stop after three rounds. If a child is later canceled or the plan changes, judge whether the breakdown needs review again; when every child is complete, judge whether the parent's goal is met.
+
+Avoid specific file paths or code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.

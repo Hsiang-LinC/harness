@@ -1,14 +1,25 @@
 ---
 id: feature
-mode: New or changed behaviour that a reviewed Spec describes
+mode: New or changed behavior
 ---
 
-**Build a reviewed Spec. You choose the order; each method owns its own steps.**
+1. **Confirm the basis.** Entry: a work to build. Check that its Deliverable and Acceptance are clear. If not, use Shaping. Output: a clear definition.
+2. **Design and break down.** Entry: the work is too big for one PR. Skills: codebase-design, to-tickets. Output: child works, with a breakdown review. Handles:
+   - (breakdown, complete.delivered)
+   - (breakdown, complete.reviewed, breakdown)
+   - (breakdown, review.round-authorized, breakdown)
+3. **Implement.** Entry: one work fits one PR. Skills: implement, tdd, pr. Output: committed code and a PR with `Delivers: <issue>`. One work has one open PR at a time; a piece delivered separately becomes its own work.
+4. **Code review.** Entry: the PR is open. Two axes; if the basis changed since a review, judge whether to review again. Output: reports saved with `review save`. Handles:
+   - (pr, complete.reviewed, code), (pr, merge.reviewed, code), (doc, complete.reviewed, code), (doc, merge.reviewed, code)
+   - (pr, review.round-authorized, code)
+   - (pr, merge.reviewed, threads)
 
-1. `harness work read` on the Spec's issue. Without a passing `spec` review, or with the reviewed blob not yet on the feature branch, go back to Shape.
-2. A Spec reviewed with a record is built directly: `harness work bind` the Spec's own issue with that record (`source: {kind: "spec", path, branch, blob}`), then [Execute](../procedures/execute.md) it. Otherwise [Break down](../procedures/break-down.md) the Spec's issue, in this context window while the grilling and Spec are still in it (no clear, compact or handoff since), else from the Spec. Then build its frontier with Execute per ticket, clearing context between tickets, or `/implement-spec` for the whole graph in one run.
-3. A Spec that turns out wrong: revise it through Shape's Spec step, then Break down again, which rewrites, re-stamps or withdraws each open ticket. A finding outside the Spec, or exhausted review rounds: go to Scope change.
+   Then return to the calling playbook's Exit.
+5. **Deliver.** Entry: the review passed. Skills: pr, deliver. With the person's authorization, `complete --merge`. Without it, `leave` and wait. Handles:
+   - (pr, complete.delivered)
+   - (pr, merge.authorized)
+   - (pr, merge.integrated)
 
-**Exit** when the Spec's issue is in a completed Linear state; `harness work complete` completes it with the final merge.
+   Then return to the calling playbook's Exit.
 
-**Reply:** one line with the Spec's issue, the PR or PRs and their merge state, and any intake opened along the way.
+**Exit:** the PR is merged and the work completed, or it waits for authorization.

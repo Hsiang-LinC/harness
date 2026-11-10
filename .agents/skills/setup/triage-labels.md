@@ -14,9 +14,19 @@ Every triaged issue also carries exactly one category role:
 
 | Canonical role | Label in our tracker | Meaning                             |
 | -------------- | -------------------- | ----------------------------------- |
-| `bug`          | `bug`                | Something is broken                 |
-| `enhancement`  | `enhancement`        | New feature or improvement          |
+| `bug`          | `Bug`                | Something is broken                 |
+| `enhancement`  | `Feature`            | New feature or improvement          |
 
-When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
+`/wayfinder` labels a map and its tickets. A separate table, so setting one never replaces a triage role:
+
+| Canonical role         | Label in our tracker   | Meaning                             |
+| ---------------------- | ---------------------- | ----------------------------------- |
+| `wayfinder:map`        | `wayfinder:map`        | The map issue                       |
+| `wayfinder:research`   | `wayfinder:research`   | Ticket: research                    |
+| `wayfinder:prototype`  | `wayfinder:prototype`  | Ticket: prototype                   |
+| `wayfinder:grilling`   | `wayfinder:grilling`   | Ticket: grilling                    |
+| `wayfinder:task`       | `wayfinder:task`       | Ticket: task                        |
+
+When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from these tables.
 
 Edit the "Label in our tracker" column to match whatever vocabulary you actually use.

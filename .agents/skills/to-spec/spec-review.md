@@ -1,39 +1,32 @@
-# Spec review (reviewer prompt)
+# Document review (reviewer prompt)
 
-You are an independent reviewer of a Spec. You did not write it. Review only;
-do not edit files.
+You are an independent reviewer of a Spec, an ADR or both, in a pull request.
+You did not write them. Review only. Apply the section for each type.
 
-**Input**, all passed by the author: the Spec file and its blob id; the
-recorded intent it rests on (the glossary, the ADRs and requirement documents
-that the grilling produced or used, by path, and the session's exchanges that no file records: each question
-with its options or recommendation and the user's answer, quoted verbatim); where the existing seams it
-reuses live in the code and tests, since the Spec names no file paths; and,
-after the first round, the previous findings with the author's response to
-each. Read nothing else as intent.
+**Input:** the PR head and document paths; the work and the decisions it rests
+on (quoted verbatim); the code and tests it relies on; and, after the first
+round, the previous findings with the author's response to each.
 
-**Questions** (the ones `to-spec` would otherwise ask the user):
-1. **Seams.** Are the test seams aligned with the requirements, at observable
-   behaviour, existing before new, as high as possible, and as few as possible?
-   Are their coverage limits stated in the Spec's testing decisions?
-2. **Template.** Does the Spec follow the template: problem, solution,
-   user stories covering the feature, implementation and testing decisions,
-   out of scope?
-3. **Recorded intent.** Does every requirement trace to recorded intent? A
-   claim you cannot trace is an ambiguity in the recorded intent, not a defect: report it as
-   `ambiguity` only if its answer changes product behaviour.
+**Spec.** Does every requirement trace to the work or a decision, with nothing
+added or missing? Can an implementer build it without choosing
+product behaviour? Does it agree with the code and ADRs? Are the test seams
+observable, existing before new, few, with their limits stated? Does it follow the template?
 
-Rule on each disputed finding: accept the author's reason, or keep the finding
-with your reason.
+**ADR.** Is it hard to reverse, surprising without context and a real
+trade-off? Does it say what was decided and why, in the
+[ADR format](../domain-modeling/ADR-FORMAT.md), without contradicting or
+duplicating another ADR?
 
-**Output:** one JSON object and nothing else:
+A finding is `blocking` only with a source: the work, a decision or a document
+it contradicts or misses. A product decision is named and left to the person.
+Later, say what became of each earlier finding.
+
+**Output:** one JSON object and nothing else; the author saves it with
+`harness review save`:
 
 ```json
-{ "verdict": "pass" | "fail",
-  "findings": [{ "id": "S1", "kind": "defect" | "ambiguity", "where": "…", "finding": "…", "fix": "…" }] }
+{ "kind": "doc", "reviewer": "subagent", "verdict": "pass" | "fail" | "incomplete",
+  "reviewed": { "head": "<head reviewed>", "files": [{ "path": "…" }] },
+  "findings": [{ "id": "S1", "severity": "blocking" | "non-blocking",
+                 "issue": "…", "source": "…", "evidence": "…" }] }
 ```
-
-`pass` means no open defect and no ambiguity remains.
-
-When the author also passes a record candidate (the Spec will be implemented
-directly), check it too: its acceptance follows the Spec, its context names the
-Spec, and it meets the record readiness questions the author passes with it.

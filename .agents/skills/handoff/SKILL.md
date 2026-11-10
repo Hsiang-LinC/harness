@@ -7,6 +7,8 @@ disable-model-invocation: true
 
 Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows) - not the current workspace.
 
+For a tracked work, save it instead with `harness leave <issue> --handoff <file>`, a JSON file of `stoppedAt`, `next` and `text`; the suggested skills below go in `text`.
+
 Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
 
 Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
