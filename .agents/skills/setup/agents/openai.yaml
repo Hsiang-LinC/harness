@@ -2,4 +2,4 @@ interface:
   display_name: "Setup"
   short_description: "Configure a repo for Harness"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

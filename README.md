@@ -47,7 +47,8 @@ The CLI reads credentials from environment variables only. It stores nothing.
 
 ## Set up a repository
 
-Run setup once in each repository:
+Run setup once in each repository (if another plugin also has a `setup` skill,
+ask for "Harness setup" in words):
 
 | Codex | Claude Code |
 | --- | --- |

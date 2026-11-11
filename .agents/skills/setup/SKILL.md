@@ -1,7 +1,7 @@
 ---
 name: setup
 description: "Configure this repo for Harness: its Linear issue tracker, triage label vocabulary and domain doc layout. Run once before first use of the other engineering skills, and again to refresh."
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Setup
@@ -56,7 +56,7 @@ Reuse an existing label when the team has one that fits; create one only when no
 
 Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files) only when exploration found monorepo signals. Then confirm which layout they want.
 
-Fill `## Document directories` of `domain.md` with the directories that exist and hold Specs, ADRs or other documents, one `` - `path` `` bullet each. The CLI reads this list from the default branch to tell documents from code.
+Fill `## Document directories` of `domain.md` with the directories that hold, or the person chose to hold, Specs, ADRs or other documents, one `` - `path` `` bullet each. The CLI reads this list from the default branch to tell documents from code.
 
 ### 3. Confirm and edit
 
@@ -65,7 +65,7 @@ Show the user a draft of:
 - The managed block (step 4) for whichever of `CLAUDE.md` / `AGENTS.md` is being edited
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` and `docs/agents/domain.md`
 
-**Refresh.** When this skill's prior output already exists, change only what is inside the `harness` markers and the template lines that are stale, and show the diff first. Name each differing line as stale (the template changed; replace it) or the user's own (keep it). Write nothing before the user confirms.
+**Refresh.** When this skill's prior output already exists, change only what is inside the `harness` markers and the template lines that are stale, and show the diff first. Name each differing line as stale (the template changed; replace it) or the user's own (keep it). Answers the person gave earlier, such as document directories and labels, are their own, even for a directory not created yet; you may propose additions. Write nothing before the user confirms.
 
 **v1.1 leftovers.** An `## Agent skills` section without the markers: show how it differs from the managed block and replace it only after the user confirms; otherwise leave it. Offer to delete the old Harness policy JSON in `docs/agents/`, again only after confirmation.
 
@@ -109,12 +109,12 @@ Tell the user how to provide them; never ask for a secret in chat, store one, or
 
 - `LINEAR_API_KEY` in the environment, for the CLI's Linear writes; a key limited to the team is better than a full personal key.
 - `GITHUB_TOKEN`, or `gh auth token` when it is unset.
-- Codex may not pass environment variables into its sandbox; allow `LINEAR_API_KEY` and `GITHUB_TOKEN` in its settings (to be verified).
+- Codex passes these variables into its sandbox, but its workspace-write sandbox has no network: set `sandbox_workspace_write.network_access = true` in `~/.codex/config.toml`, or the CLI cannot reach Linear or GitHub.
 
 ### 6. Recommend
 
 - Install Linear's GitHub integration so PRs link to their issues, but do not let it set Done when a PR merges.
-- Turn on GitHub's automatic deletion of head branches in the repo settings.
+- If the repo does not delete head branches automatically (`gh api repos/{owner}/{repo} --jq .delete_branch_on_merge`), recommend turning it on.
 
 ### 7. Done
 
