@@ -15,16 +15,17 @@ disable-model-invocation: false
 
 - When the goal is clear but the activities are not, use a playbook as a reference. When the gap and the activities are already clear, pick the skill directly. When neither fits, plan it yourself; the same CLI boundaries apply.
 - A method the person names is used as delegated. If it does not fit, say so.
-- A reference is not a shortcut. Required independent reviews, evidence and human decision points stay.
+- A reference is not a shortcut. Whatever the route, a pull request gets its independent code or document review, a breakdown gets its breakdown review, and the points where a person decides stay. Other reviews are your judgment.
 
 ## Authorization
 
-- Propose first before creating or arranging works, or changing an agreed Deliverable or Acceptance. Do what is already confirmed.
-- Merging and extra review rounds need the person's explicit authorization.
+- Propose first before arranging works, or changing an agreed Deliverable or Acceptance. A new `needs-triage` work that records a request is itself a proposal; starting it needs the person's agreement. Do what is already confirmed.
+- Merging needs the person's explicit authorization.
+- A review gets at most three rounds on a work. A round is one run of that review ending in a verdict (the two code axes together are one run); a new head does not restart the count. When the third round does not pass, stop, say what is stuck and let the person decide.
 
 ## Commands
 
-- Consequential operations go through the `harness` CLI. A plain discussion comment may use the Linear connector.
+- When the `harness` CLI has the operation, use it (`harness --help`). The rest, such as a plain discussion comment, may use the Linear connector or `gh`.
 - Find the CLI in this order:
   1. `harness` on the host PATH.
   2. The absolute path a hook injected.

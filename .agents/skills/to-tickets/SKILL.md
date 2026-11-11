@@ -76,10 +76,10 @@ The end-to-end behaviour this ticket makes work, from the user's perspective, no
 
 Run `harness create --input <file>`. After an interruption, rerun it with the same file. Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
 
-Do NOT close or modify any parent issue.
+Do NOT close or modify any parent issue, except its `Deliverable:` line, which becomes `breakdown`.
 
 ### 6. Review the breakdown
 
-Give a fresh subagent the [breakdown review prompt](breakdown-review.md) and the parent; never review your own breakdown. Save its report with `harness review save --target <parent> --file <report>`. On `fail`, fix with `harness update` or `harness create`, then review again with a new subagent; stop after three rounds. If a child is later canceled or the plan changes, judge whether the breakdown needs review again; when every child is complete, judge whether the parent's goal is met.
+Give a fresh subagent the [breakdown review prompt](breakdown-review.md) and the parent; never review your own breakdown. Save its report with `harness review save --target <parent> --file <report>`. On `fail`, fix with `harness update` or `harness create`, then review again with a new subagent. At most three rounds; when the third does not pass, stop and ask the person. If a child is later canceled or the plan changes, judge whether the breakdown needs review again; when every child is complete, judge whether the parent's goal is met.
 
 Avoid specific file paths or code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
