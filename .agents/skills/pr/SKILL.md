@@ -9,10 +9,10 @@ metadata:
     url: "https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md"
 ---
 
-Use this template for writing the PR body. Code and document PRs alike start with `Delivers: <issue>` for each work they deliver, and a bug fix adds a `## Bug reproduction` section:
+Use this template for writing the PR body. Code and document PRs alike start with `Closes <issue>` for each work they deliver (Linear links the PR to the issue from it; `Part of <issue>` for a PR that only contributes), and a bug fix adds a `## Bug reproduction` section:
 
 ```markdown
-Delivers: <issue>
+Closes <issue>
 
 ## Summary
 

@@ -16,6 +16,6 @@ If the Spec or the Acceptance turns out to be unclear or wrong, do not change it
 
 Commit your work to the current branch.
 
-For a tracked work, open the PR with the `pr` skill first (body says `Delivers: <issue>`), because a code review report is saved on the PR.
+For a tracked work, open the PR with the `pr` skill first (body says `Closes <issue>`), because a code review report is saved on the PR.
 
 Once done, call the Skill tool with "code-review" to review the work. On `fail`, fix, commit and review again. At most three rounds; when the third does not pass, stop and ask the person. Whoever arranged each review saves its reports with `harness review save`.

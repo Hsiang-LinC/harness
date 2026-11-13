@@ -73,4 +73,4 @@ Only offer to create an ADR when all three are true:
 
 If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
 
-An ADR for a tracked work goes in by a pull request whose body says `Delivers: <issue>`. Have a fresh subagent review it with the [document review prompt](../to-spec/spec-review.md) and save the report with `harness review save --target pr:<n> --file <report>`.
+An ADR for a tracked work goes in by a pull request whose body says `Closes <issue>`. Have a fresh subagent review it with the [document review prompt](../to-spec/spec-review.md) and save the report with `harness review save --target pr:<n> --file <report>`.

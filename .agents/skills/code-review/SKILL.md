@@ -82,7 +82,7 @@ If the spec is missing, skip the Spec sub-agent and note this in the final repor
 
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
 
-For a tracked PR, the agent that arranged the review saves each axis as its own report with `harness review save --target pr:<n> --file <report>`: `kind: code`, `axis` (`standards` or `spec`), `reviewed.head` (the head reviewed), `verdict` (`pass`, `fail`, or `incomplete` when a tool or source failed), `reviewer`, and `findings`, each with `severity` and the `source` that makes it blocking (the standard or spec line). A finding with no source is not blocking.
+For a tracked PR, the agent that arranged the review saves each axis as its own report with `harness review save --target pr:<n> --file <report>`: `kind: code`, `axis` (`standards` or `spec`), `reviewed.head` (the head reviewed), `verdict` (`pass`, `fail`, or `incomplete` when a tool or source failed), `reviewer`, and `findings`, each with `id`, `severity`, its text in `issue` (the CLI refuses a finding without it) and the `source` that makes it blocking (the standard or spec line). A finding with no source is not blocking.
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
 

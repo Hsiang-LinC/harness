@@ -13,6 +13,6 @@ The work (`harness read <issue>`) must name the candidate (a version, commit or 
 1. **Install.** A fresh subagent, given only the work, installs the candidate in a new disposable clone outside every working tree and returns the clone's path, the identity the product reports, the CLI's path, its resources and every command with its output. A different identity is `FAIL`: go to step 4.
 2. **Drive.** A second fresh subagent that did not install it drives each journey with the [verifier prompt](verifier.md) and returns a verdict per criterion with evidence.
 3. **Judge.** Rerun step 2, at most twice, for a criterion without a verdict. `PASS`: every criterion holds. `PASS+NOTES`: all hold, but the verifier found a defect or doubt no criterion names. `FAIL`: a criterion fails or could not be checked.
-4. **Report.** Save it with `harness review save --target <issue> --file <report>`: `kind: acceptance`, `verdict` (`pass` for both PASS forms, else `fail`), `reviewer`, `findings`, and in `text` the candidate, each criterion's verdict and evidence. Remove the clone and its resources.
+4. **Report.** Save it with `harness review save --target <issue> --file <report>`: `kind: acceptance`, `verdict` (`pass` for both PASS forms, else `fail`), `reviewer`, `findings` (text in `issue`), and in `text` the candidate, each criterion's verdict and evidence. Remove the clone and its resources.
 
 The person who wrote the journeys decides on a `FAIL` or `PASS+NOTES`, never the verifier or you; their acceptance, in their words, goes in a report's `text`.

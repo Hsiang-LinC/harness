@@ -95,11 +95,11 @@ Run `harness claim <issue>` to start or continue tracked work.
 
 Then write the docs files using the seed templates in this skill folder as a starting point:
 
-- [issue-tracker-linear.md](./issue-tracker-linear.md): the Linear team and project, and the `Delivers:` line for PR bodies
+- [issue-tracker-linear.md](./issue-tracker-linear.md): the Linear team and project, and how a PR is linked to its issue
 - [triage-labels.md](./triage-labels.md): label mapping
 - [domain.md](./domain.md): domain doc consumer rules, layout and document directories
 
-Keep the `Linear team:` and `Linear project:` lines and the `## Document directories` bullets in the form the templates show; the CLI parses them.
+Keep the `Linear team:` and `Linear project:` lines and the `## Document directories` bullets in the form the templates show; the CLI parses them. After writing, run `harness read setup`: it prints what the CLI read from each file and what it could not; fix every problem and tell the user each gap.
 
 Create each configured label the Linear team lacks, only after the user confirmed it in step 3.
 
@@ -113,7 +113,7 @@ Tell the user how to provide them; never ask for a secret in chat, store one, or
 
 ### 6. Recommend
 
-- Install Linear's GitHub integration so PRs link to their issues, but do not let it set Done when a PR merges.
+- Install Linear's GitHub integration (required): it links PRs to their issues, and the CLI finds a work's PRs only through those links. It may set Done when a PR merges; `harness complete` still evaluates the work.
 - If the repo does not delete head branches automatically (`gh api repos/{owner}/{repo} --jq .delete_branch_on_merge`), recommend turning it on.
 
 ### 7. Done

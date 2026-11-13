@@ -16,7 +16,7 @@ The issue tracker and triage label vocabulary should have been provided to you. 
 
 Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below in the Specs directory (`docs/specs/`), delivered by a pull request whose body says `Delivers: <issue>`.
+3. Write the spec using the template below in the Specs directory (`docs/specs/`), delivered by a pull request whose body says `Closes <issue>`.
 
 4. Have a fresh subagent review it with the [document review prompt](spec-review.md); never review your own Spec. Save its report with `harness review save --target pr:<n> --file <report>`. On `fail`, fix, re-review; at most three rounds, then ask the person.
 
