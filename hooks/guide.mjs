@@ -16,7 +16,7 @@ const quote = value => process.platform === 'win32'
 const base = `This repo uses Harness.`;
 const pointer = `The harness CLI is at ${quote(cli)}.`;
 const context = event === 'SessionStart'
-  ? `${base} Use the \`guide\` skill to pick a route. ${pointer} Run \`harness claim <issue>\` to start or continue tracked work.`
+  ? `${base} Use the \`guide\` skill to pick a route. ${pointer} Run \`harness claim <issue>\` to start or continue tracked work, or \`harness read <issue>\` to see where it stands.`
   : `${base} ${pointer}`;
 const output = JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext: context } });
 if (Buffer.byteLength(output) > 16384) throw new Error('Harness installed entry context exceeds 16 KiB');

@@ -99,8 +99,8 @@ An agent finds `harness` in this order:
 
 Two hooks add one line of context: at session start (start, resume, after
 compaction) and when a subagent starts. The line says the repo uses Harness,
-names the installed CLI path, and points to the `guide` skill and
-`harness claim`. Your agent may ask you to trust the hooks first. Without
+names the installed CLI path, and points to the `guide` skill,
+`harness claim` and `harness read`. Your agent may ask you to trust the hooks first. Without
 them, use the third lookup above.
 
 ## Upgrading from v1.1
