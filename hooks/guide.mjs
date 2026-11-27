@@ -8,13 +8,14 @@ if (!['SessionStart', 'SubagentStart'].includes(event)) {
 }
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const guide = join(root, '.agents/skills/guide/SKILL.md');
-const cli = join(root, 'bin/harness');
+const cli = join(root, 'lib/harness.mjs');
 await Promise.all([access(guide), access(cli)]);
 const quote = value => process.platform === 'win32'
   ? `'${value.replaceAll("'", "''")}'`
   : `'${value.replaceAll("'", "'\\''")}'`;
 const base = `This repo uses Harness.`;
-const pointer = `The harness CLI is at ${quote(cli)}.`;
+const cliPath = quote(cli);
+const pointer = `The harness CLI is at ${cliPath}; unless \`harness\` is on PATH, run each \`harness <command>\` in the Harness skills as \`node ${cliPath} <command>\`.`;
 const context = event === 'SessionStart'
   ? `${base} Use the \`guide\` skill to pick a route. ${pointer} Run \`harness claim <issue>\` to start or continue tracked work, or \`harness read <issue>\` to see where it stands.`
   : `${base} ${pointer}`;

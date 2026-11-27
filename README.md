@@ -49,7 +49,7 @@ Invoke those two commands explicitly. Once a project verifier exists, Guide can 
 
 ## Reference
 
-The CLI ships with the plugin. Session hooks help the agent locate it; its fallback is `bin/harness` in the installed plugin. Run `harness --help` to list commands or `harness complete --help` for delivery options. Optional cross-vendor review with `interrogate` requires the other vendor’s CLI installed and signed in.
+The CLI ships with the plugin. Session hooks help the agent locate it; its fallback is `node lib/harness.mjs` in the installed plugin. The plugin ships no `bin/`, so `harness` is on PATH only after an npm install; otherwise run each `harness <command>` as `node '<plugin root>/lib/harness.mjs' <command>`. Run `harness --help` to list commands or `harness complete --help` for delivery options. Optional cross-vendor review with `interrogate` requires the other vendor’s CLI installed and signed in.
 
 <details>
 <summary>Upgrading from v1.1</summary>

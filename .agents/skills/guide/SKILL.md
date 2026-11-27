@@ -34,8 +34,9 @@ If no verifier exists, use the available tools for this task. Suggest explicitly
 - When the `harness` CLI has the operation, use it (`harness --help`). The rest, such as a plain discussion comment, may use the Linear connector or `gh`.
 - Find the CLI in this order:
   1. `harness` on the host PATH.
-  2. The absolute path a hook injected.
-  3. `bin/harness` under the plugin root: from any loaded skill's folder, `../../../bin/harness`.
+  2. `node <path>`, with the absolute path a hook injected.
+  3. `lib/harness.mjs` under the plugin root, three folders above any loaded skill's `SKILL.md` (`<skill folder>/../../../lib/harness.mjs`).
+- Unless `harness` is on PATH, run each `harness <command>` in the Harness skills as `node <path> <command>`, with the path from step 2 or 3.
 
 ## Pull requests
 
