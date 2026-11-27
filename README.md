@@ -1,109 +1,58 @@
 # Harness
 
-Harness is a plugin for Claude Code and Codex. It gives your agent a set of
-engineering methods (grilling, Specs, tickets, TDD, code review) and a small
-CLI that reads and records the work in Linear and delivers it through GitHub.
+Harness helps you take an idea or a Linear issue to a reviewed GitHub pull request with Claude Code or Codex. Describe the outcome to Guide. It picks a workflow, asks you about unresolved product decisions, and uses the bundled CLI to track work across sessions. You authorize the merge.
 
-You describe what you want. The agent starts from the `guide` skill, which
-picks a playbook: shape an idea, fix a bug, build a feature, refactor, or run
-autonomously. The agent works through its steps. Every consequential write to
-Linear or GitHub goes through the `harness` CLI. It reads the current facts,
-checks the conditions, and refuses with the reason when a step is not allowed
-yet, for example merging before review has passed. You keep the product
-decisions and the authorization to merge.
+## Install and set up
 
-## Requirements
+Use Node.js 22.12+ on Linux or macOS, Git, and the GitHub CLI. Set `LINEAR_API_KEY` for your Linear workspace and authenticate GitHub with `gh auth login` or `GITHUB_TOKEN`. Keep credentials out of chat and repository files.
 
-- Node.js 22.12 or later, on Linux or macOS (Windows is not tested yet)
-- Git and the GitHub CLI (`gh`)
-- A Linear workspace with a team and a project for this work
-
-## Install
-
-Codex:
+**Codex**
 
 ```sh
 codex plugin marketplace add Hsiang-LinC/harness
 codex plugin add harness@harness
 ```
 
-Claude Code:
+**Claude Code**
 
 ```text
 /plugin marketplace add Hsiang-LinC/harness
 /plugin install harness@harness
 ```
 
-No `npm install` is needed. The CLI ships inside the plugin as one JavaScript
-file with no native dependencies.
+Open your repository and run **`$setup`** in Codex or **`/harness:setup`** in Claude Code. Choose your Linear team and project. Setup shows its proposed changes to `docs/agents/` and the managed block in `AGENTS.md` or `CLAUDE.md` for your confirmation.
 
-## Credentials
+## Everyday workflows
 
-The CLI reads credentials from environment variables only. It stores nothing.
+Start a message with **`$guide`** in Codex or **`/harness:guide`** in Claude Code, followed by a request like one of these. Substitute your own issue ID for `APP-42`.
 
-- Linear: `LINEAR_API_KEY`.
-- GitHub: `GITHUB_TOKEN`, else your `gh auth login`.
-- Keep keys out of command-line arguments, chat and repository files.
+| Goal | What to say to Guide | What to expect |
+| --- | --- | --- |
+| Shape an idea | “I want a stock watchlist. Help me decide what I should see when I reopen it tomorrow.” | Discuss a concrete use case, try a prototype if useful, and capture the agreed behavior in a spec. |
+| Build a feature | “Build APP-42. Show the source and publication time for each update.” | Claim the issue, implement against its acceptance criteria, and open a PR. Independent review and verification of the changed user path can proceed in parallel. |
+| Fix a bug | “Refresh fails, but yesterday’s report gets marked as updated today.” | Reproduce the failure, find the cause, and repeat the same action after the fix. The PR records what changed. |
+| Refactor | “Move report formatting out of the API handler. Keep the response fields and values unchanged.” | Establish the observable contract, make the change, and compare behavior before and after. |
+| Resume work | “Continue APP-42. What passed review, and what is still blocking delivery?” | Recover the issue, linked PR, reviews and latest handoff from Linear and GitHub. |
 
-## Set up a repository
+For a parent issue with approved child issues, ask Guide to work through its ready children. It can move to another child when one needs your decision and reports what still needs attention.
 
-Run setup once in each repository (if another plugin also has a `setup` skill,
-ask for "Harness setup" in words):
+## Verify a change
 
-| Codex | Claude Code |
-| --- | --- |
-| `$setup` | `/harness:setup` |
+Guide uses the project’s verifier or an existing command to exercise the relevant UI, CLI or API. The PR records the version, action and observed result. An unreachable entry point leaves that criterion open.
 
-Setup asks which Linear team and project to use, shows the files it will
-write (`docs/agents/` notes and a marked block in `AGENTS.md` or `CLAUDE.md`)
-and writes them only after you confirm. It checks that the team, project and
-labels exist and explains the credential variables.
+| When you want to… | Codex | Claude Code |
+| --- | --- | --- |
+| Create a reusable verifier and feature map | `$create-verification-skill` | `/harness:create-verification-skill` |
+| Audit an existing map against the running app | `$maintain-verification-skill` | `/harness:maintain-verification-skill` |
 
-## Use it
+Invoke those two commands explicitly. Once a project verifier exists, Guide can use it during ordinary development. The separate `acceptance` skill checks an installed release candidate against journeys you specify.
 
-Start with the guide and say what you want:
+## Reference
 
-| Codex | Claude Code |
-| --- | --- |
-| `$guide <goal>` | `/harness:guide <goal>` |
+The CLI ships with the plugin. Session hooks help the agent locate it; its fallback is `bin/harness` in the installed plugin. Run `harness --help` to list commands or `harness complete --help` for delivery options. Optional cross-vendor review with `interrogate` requires the other vendor’s CLI installed and signed in.
 
-Run the guide with no goal to choose the next step from the conversation.
-Start or continue tracked work with `harness claim <issue>`.
-
-Some methods only you can start. Wayfinder is one. When a playbook reaches
-such a step, the agent asks you to run it.
-
-## What ships
-
-- **Methods.** Matt Pocock's engineering skills under their original names,
-  edited only where they meet the CLI. In Claude Code they sit under the
-  plugin's namespace, for example `/harness:tdd`.
-- **`interrogate`**, from Lauren Tan's pstack: a second review run on the other
-  vendor's CLI. It needs that CLI installed and signed in, and stops with the
-  fix if it is not.
-- **The guide and its five playbooks**, which choose and order the methods.
-- **`setup`**, which configures a repository.
-- **The `harness` CLI**, with seven commands. Every command has `--help`; the
-  [package README](https://github.com/Hsiang-LinC/agentic-dev-workflow/blob/main/packages/harness/README.md)
-  has the usage.
-
-## Finding the CLI
-
-An agent finds `harness` in this order:
-
-1. `harness` on `PATH`.
-2. The path the hook injected at session start.
-3. `bin/harness` three directories above a loaded skill's `SKILL.md`.
-
-## Hooks
-
-Two hooks add one line of context: at session start (start, resume, after
-compaction) and when a subagent starts. The line says the repo uses Harness,
-names the installed CLI path, and points to the `guide` skill,
-`harness claim` and `harness read`. Your agent may ask you to trust the hooks first. Without
-them, use the third lookup above.
-
-## Upgrading from v1.1
+<details>
+<summary>Upgrading from v1.1</summary>
 
 v2 changes the commands, the credentials and the setup files.
 
@@ -120,23 +69,6 @@ v2 changes the commands, the credentials and the setup files.
    and review before work relies on it, and reviews are saved again in the v2
    format.
 
-## Versions
+</details>
 
-Releases have tags such as `v2.0.0` and a GitHub Release with notes that list
-the changes and upgrade steps. Tags ending in `-dev.snapshot.N` or `-rc.N` are
-candidates under test, not stable releases. Every tag records the source
-commit it was built from.
-
-## Verified so far
-
-Codex PATH and hook events are verified in the installed acceptance run, not
-yet here. Windows is not tested yet. Orchestra automation is deferred.
-
-## License and feedback
-
-Harness's own code is [MIT licensed](LICENSE). The methods keep their
-[Matt Pocock MIT notice](.agents/skills/LICENSE-matt-pocock) and
-`interrogate` keeps its [pstack MIT notice](.agents/skills/LICENSE-pstack).
-
-Report bugs and requests in
-[GitHub Issues](https://github.com/Hsiang-LinC/harness/issues).
+See [release notes](https://github.com/Hsiang-LinC/harness/releases) or [report an issue](https://github.com/Hsiang-LinC/harness/issues). Harness and its bundled methods carry [Harness](LICENSE), [Matt Pocock](.agents/skills/LICENSE-matt-pocock) and [pstack](.agents/skills/LICENSE-pstack) MIT notices.

@@ -17,6 +17,12 @@ disable-model-invocation: false
 - A method the person names is used as delegated. If it does not fit, say so.
 - A reference is not a shortcut. Whatever the route, a pull request gets its independent code or document review, a breakdown gets its breakdown review, and the points where a person decides stay. Other reviews are your judgment.
 
+## Verify behavior
+
+For a change to observable behavior, identify the affected user entry point and expected result from Acceptance. Use the matching project verifier or existing repo command. Drive the changed version through that surface, check the result and relevant side effects, and include the version, command and evidence in the PR. If the outcome cannot be observed, record the attempted path and missing prerequisite; save the gap in the handoff and keep delivery pending until the path can be verified or the person changes the agreed Acceptance. Recheck affected evidence after a fix.
+
+If no verifier exists, use the available tools for this task. Suggest explicitly invoking `create-verification-skill` when a recipe warrants reuse. If an existing feature map has drifted, suggest `maintain-verification-skill`. Use `principle-build-the-lever` when a repeatable tool would make the work easier to check. Release acceptance still uses the candidate and journeys specified for that work.
+
 ## Authorization
 
 - Propose first before arranging works, or changing an agreed Deliverable or Acceptance. A new `needs-triage` work that records a request is itself a proposal; starting it needs the person's agreement. Do what is already confirmed.
